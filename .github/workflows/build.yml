@@ -6,26 +6,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '3.1.x', '6.0.x' ]
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup dotnet ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-      # You can test your matrix by printing the current dotnet version
-      - name: Display dotnet version
-        working-directory: ~/api
-        run: dotnet --version
+        - name: Setup .NET 6.x
+      uses: actions/setup-dotnet@v3
+      with:
+        # Semantic version range syntax or exact version of a dotnet version
+        dotnet-version: '6.x'
       - name: Install dependencies
-        working-directory: ~/api
+        working-directory: /home/runner/work/3-tier-application/3-tier-application/api
         run: dotnet restore
       - name: Build
-        working-directory: ~/api
+        working-directory: /home/runner/work/3-tier-application/3-tier-application/api
         run: dotnet build
       - name: Test with the dotnet CLI
-        working-directory: ~/api
+        working-directory: /home/runner/work/3-tier-application/3-tier-application/api
         run: dotnet test
