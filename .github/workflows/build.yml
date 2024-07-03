@@ -18,12 +18,14 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
       # You can test your matrix by printing the current dotnet version
       - name: Display dotnet version
+        working-directory: ~/api
         run: dotnet --version
-        
       - name: Install dependencies
-        path: ~/api/
+        working-directory: ~/api
         run: dotnet restore
       - name: Build
+        working-directory: ~/api
         run: dotnet build
       - name: Test with the dotnet CLI
+        working-directory: ~/api
         run: dotnet test
