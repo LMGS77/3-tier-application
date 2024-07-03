@@ -6,9 +6,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-        - name: Setup .NET 6.x
-      uses: actions/setup-dotnet@v3
-      with:
+      - name: Setup .NET 6.x
+        uses: actions/setup-dotnet@v3
+        with:
         # Semantic version range syntax or exact version of a dotnet version
         dotnet-version: '6.x'
       - name: Install dependencies
