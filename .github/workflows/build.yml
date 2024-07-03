@@ -21,6 +21,7 @@ jobs:
         run: dotnet --version
         
       - name: Install dependencies
+        path: ~/api/
         run: dotnet restore
       - name: Build
         run: dotnet build
