@@ -9,11 +9,11 @@ jobs:
 
     steps:
 
-      - name: Setup .NET 6.0.22
+      - name: Setup .NET 6.0.x
         uses: actions/setup-dotnet@v3
         with:
         # Semantic version range syntax or exact version of a dotnet version
-          dotnet-version: '6.0.22'
+          dotnet-version: '6.0.x'
     
       - name: Install dependencies
         working-directory: /home/runner/work/3-tier-application/3-tier-application/api
