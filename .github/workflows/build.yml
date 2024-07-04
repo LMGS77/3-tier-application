@@ -17,14 +17,38 @@ jobs:
         with:
           dotnet-version: '6.0.x'
     
-      - name: Install dependencies
-        working-directory: api
+      - name: Install dependencies Basic3tier.Core
+        working-directory: api/Basic3Tier.Core/Basic3Tier.Core.csproj
         run: dotnet restore
-    
-      - name: Build
-        working-directory: api
+
+      - name: Install dependencies Basic3tier.Infrastructure
+        working-directory: api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
+        run: dotnet restore
+
+      - name: Install dependencies Basic3tierAPI
+        working-directory: api/Basic3TierAPI/Basic3TierAPI.csproj
+        run: dotnet restore
+
+      - name: Build Basic3tier.Core
+        working-directory: api/Basic3Tier.Core/Basic3Tier.Core.csproj
         run: dotnet build
-    
-      - name: Test with the dotnet CLI
-        working-directory: api
+
+      - name: Build Basic3tier.Infrastructure
+        working-directory: api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
+        run: dotnet build
+
+      - name: Build Basic3tierAPI
+        working-directory: api/Basic3TierAPI/Basic3TierAPI.csproj
+        run: dotnet build
+
+      - name: Test Basic3tier.Core
+        working-directory: api/Basic3Tier.Core/Basic3Tier.Core.csproj
+        run: dotnet test
+
+      - name: Test Basic3tier.Infrastructure
+        working-directory: api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
+        run: dotnet test
+
+      - name: Test Basic3tierAPI
+        working-directory: api/Basic3TierAPI/Basic3TierAPI.csproj
         run: dotnet test
