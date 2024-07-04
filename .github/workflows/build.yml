@@ -26,7 +26,6 @@ jobs:
       - name: SonarQube - Begin analysis
         run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ vars.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
 
-    
       - name: Install dependencies Basic3tier.Core
         run: dotnet restore ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
 
@@ -54,9 +53,8 @@ jobs:
       - name: Test Basic3tierAPI
         run: dotnet test ./api/Basic3TierAPI/Basic3TierAPI.csproj
 
-     - name: SonarQube - End analysis
+      - name: SonarQube - End analysis
         run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
-
 
 #      - name: Cache SonarQube packages
 #        uses: actions/cache@v1
