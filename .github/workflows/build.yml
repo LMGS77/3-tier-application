@@ -17,6 +17,12 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
+      - name: Install Java JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Install SonarScanner for .NET
         run: |
           dotnet tool install --global dotnet-sonarscanner
@@ -28,56 +34,25 @@ jobs:
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}    
         run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" /d:sonar.login="${{ env.SONAR_TOKEN }}"
 
-# dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="http://51.21.132.66:9000"  /d:sonar.login="61d8df680d652f3f33239eea454e7f0560082e50"
-# dotnet build
-# dotnet sonarscanner end /d:sonar.login="61d8df680d652f3f33239eea454e7f0560082e50"
+      - name: Install dependencies Basic3tier
+        run: |
+          dotnet restore ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
+          dotnet restore ./api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
+          dotnet restore ./api/Basic3TierAPI/Basic3TierAPI.csproj
 
-
-
-
-      - name: Install dependencies Basic3tier.Core
-        run: dotnet restore ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
-
-      - name: Install dependencies Basic3tier.Infrastructure
-        run: dotnet restore ./api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
-
-      - name: Install dependencies Basic3tierAPI
-        run: dotnet restore ./api/Basic3TierAPI/Basic3TierAPI.csproj
-
-      - name: Build Basic3tier.Core
-        run: dotnet build ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
-
-      - name: Build Basic3tier.Infrastructure
-        run: dotnet build ./api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
-
-      - name: Build Basic3tierAPI
-        run: dotnet build ./api/Basic3TierAPI/Basic3TierAPI.csproj
+      - name: Build Basic3tier
+        run: |
+          dotnet build ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
+          dotnet build ./api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
+          dotnet build ./api/Basic3TierAPI/Basic3TierAPI.csproj
 
       - name: Test Basic3tier.Core
-        run: dotnet test ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
-
-      - name: Test Basic3tier.Infrastructure
-        run: dotnet test ./api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
-
-      - name: Test Basic3tierAPI
-        run: dotnet test ./api/Basic3TierAPI/Basic3TierAPI.csproj
+        run: |
+          dotnet test ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
+          dotnet test ./api/Basic3Tier.Infrastructure/Basic3Tier.Infrastructure.csproj
+          dotnet test ./api/Basic3TierAPI/Basic3TierAPI.csproj
 
       - name: SonarQube - End analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
-#      - name: Cache SonarQube packages
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.sonar/cache
-#          key: ${{ runner.os }}-sonar
-#          restore-keys: ${{ runner.os }}-sonar
-
-#     - name: Run analysis
-#        env:
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-#        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ci-java -Dsonar.projectName='ci-java'
-
-
