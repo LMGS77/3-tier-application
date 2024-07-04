@@ -21,7 +21,7 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Set up environment
-        run: echo "##[set-env name=PATH]$PATH:$HOME/.dotnet/tools"
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
     
       - name: SonarQube - Begin analysis
         run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ vars.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
