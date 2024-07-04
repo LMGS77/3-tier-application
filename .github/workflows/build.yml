@@ -1,4 +1,4 @@
-name: dotnet package
+name: build and go
 
 on: [push]
 
@@ -9,20 +9,22 @@ jobs:
 
     steps:
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Setup .NET 6.0.x
         uses: actions/setup-dotnet@v3
         with:
-        # Semantic version range syntax or exact version of a dotnet version
           dotnet-version: '6.0.x'
     
       - name: Install dependencies
-        working-directory: /home/runner/work/3-tier-application/3-tier-application/api
+        working-directory: api
         run: dotnet restore
     
       - name: Build
-        working-directory: /home/runner/work/3-tier-application/3-tier-application/api
+        working-directory: api
         run: dotnet build
     
       - name: Test with the dotnet CLI
-        working-directory: /home/runner/work/3-tier-application/3-tier-application/api
+        working-directory: api
         run: dotnet test
