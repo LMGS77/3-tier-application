@@ -23,11 +23,11 @@ jobs:
       - name: Set up environment
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
-     - name: Run analysis
+      - name: Run analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}    
-       run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" /d:sonar.login="${{ env.SONARQUBE_TOKEN }}"
+        run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" /d:sonar.login="${{ env.SONARQUBE_TOKEN }}"
 
 
       - name: Install dependencies Basic3tier.Core
