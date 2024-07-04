@@ -76,6 +76,7 @@ jobs:
           docker-compose -f docker-compose.yml build
           docker-compose -f docker-compose.yml push
 
+          
       - name: Deploy application via SSH
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
