@@ -26,8 +26,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}    
-        run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" /d:sonar.login="${{ env.SONARQUBE_TOKEN }}"
-        
+        run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" /d:sonar.login="${{ env.SONAR_TOKEN }}"
+
 # dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="http://51.21.132.66:9000"  /d:sonar.login="61d8df680d652f3f33239eea454e7f0560082e50"
 # dotnet build
 # dotnet sonarscanner end /d:sonar.login="61d8df680d652f3f33239eea454e7f0560082e50"
