@@ -24,7 +24,7 @@ jobs:
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
     
       - name: SonarQube - Begin analysis
-        run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ vars.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
+        run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ vars.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Install dependencies Basic3tier.Core
         run: dotnet restore ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
