@@ -83,4 +83,4 @@ jobs:
             rm -rf 3_tier_app_solution_k8s &&
             git clone https://github.com/LMGS77/3-tier-application.git &&
             cd 3-tier-application &&
-            sudo docker compose up -d'
+            sudo docker-compose up -d'
