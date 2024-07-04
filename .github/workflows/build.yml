@@ -65,7 +65,7 @@ jobs:
       - name: SonarQube - End analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
+        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
 #      - name: Cache SonarQube packages
 #        uses: actions/cache@v1
