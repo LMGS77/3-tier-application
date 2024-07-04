@@ -18,16 +18,21 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Install SonarScanner for .NET
-        run: dotnet tool install --global dotnet-sonarscanner
-
-      - name: Set up environment
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
       - name: Run analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}    
         run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ env.SONAR_HOST_URL }}" /d:sonar.login="${{ env.SONARQUBE_TOKEN }}"
+        
+# dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="http://51.21.132.66:9000"  /d:sonar.login="61d8df680d652f3f33239eea454e7f0560082e50"
+# dotnet build
+# dotnet sonarscanner end /d:sonar.login="61d8df680d652f3f33239eea454e7f0560082e50"
+
+
 
 
       - name: Install dependencies Basic3tier.Core
@@ -58,6 +63,8 @@ jobs:
         run: dotnet test ./api/Basic3TierAPI/Basic3TierAPI.csproj
 
       - name: SonarQube - End analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
 
 #      - name: Cache SonarQube packages
