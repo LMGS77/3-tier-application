@@ -16,6 +16,16 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
+
+      - name: Install SonarScanner for .NET
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Set up environment
+        run: echo "##[set-env name=PATH]$PATH:$HOME/.dotnet/tools"
+    
+      - name: SonarQube - Begin analysis
+        run: dotnet sonarscanner begin /k:"3-tier-app" /d:sonar.host.url="${{ vars.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
+
     
       - name: Install dependencies Basic3tier.Core
         run: dotnet restore ./api/Basic3Tier.Core/Basic3Tier.Core.csproj
@@ -43,3 +53,22 @@ jobs:
 
       - name: Test Basic3tierAPI
         run: dotnet test ./api/Basic3TierAPI/Basic3TierAPI.csproj
+
+     - name: SonarQube - End analysis
+        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
+
+
+#      - name: Cache SonarQube packages
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.sonar/cache
+#          key: ${{ runner.os }}-sonar
+#          restore-keys: ${{ runner.os }}-sonar
+
+#     - name: Run analysis
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+#        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ci-java -Dsonar.projectName='ci-java'
+
+
