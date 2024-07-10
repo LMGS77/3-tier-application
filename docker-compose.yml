@@ -7,8 +7,8 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "admin123"
       POSTGRES_DB: "basic3tier"
-    ports:
-      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
     networks:
       - my_network
 
@@ -37,7 +37,7 @@ services:
     container_name: ui
 
 volumes:
-  db-data:
+  db_data:
 
 networks:
   my_network:
